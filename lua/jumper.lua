@@ -1,4 +1,5 @@
 local Path = require("plenary.path")
+local log = require("log").log
 
 local M = {}
 
@@ -57,7 +58,7 @@ function M.add()
 	end
 
 	if tbl_has_entry(JumperPaths, input_path) then
-		vim.notify("[Jumper] This path already exists", vim.log.levels.WARN)
+		log.error("[Jumper] This path already exists")
 		return
 	end
 
@@ -86,9 +87,8 @@ function M.remove(path)
 		end
 	end
 
-	vim.notify(
-		string.format("[Jumper] unable to remove path %s, doesn't exist!", path),
-		vim.log.levels.ERROR
+	log.error(
+		string.format("[Jumper] unable to remove path %s, doesn't exist!", path)
 	)
 end
 
@@ -99,9 +99,8 @@ function M.rename(path)
 		end
 	end
 
-	vim.notify(
-		string.format("[Jumper] unable to rename path %s, doesn't exist!", path),
-		vim.log.levels.ERROR
+	log.error(
+		string.format("[Jumper] unable to rename path %s, doesn't exist!", path)
 	)
 end
 
@@ -131,9 +130,8 @@ function M.edit(path)
 		end
 	end
 
-	vim.notify(
-		string.format("[Jumper] unable to edit path %s, doesn't exist!", path),
-		vim.log.levels.ERROR
+	log.error(
+		string.format("[Jumper] unable to edit path %s, doesn't exist!", path)
 	)
 end
 

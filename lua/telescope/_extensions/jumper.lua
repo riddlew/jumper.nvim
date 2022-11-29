@@ -5,6 +5,7 @@ local finders = require("telescope.finders")
 -- local entry_display = require("telescope.pickers.entry_display")
 local action_state = require("telescope.actions.state")
 local jumper = require("jumper")
+local log = require("log").log
 
 if not has_telescope then
 	error("This plugin requires nvim-telescope/telescope.nvim")
@@ -62,7 +63,7 @@ local function delete_path(bufnr)
 
 	if should_delete ~= "y" then
 		print("")
-		vim.notify("[Jumper] path delete cancelled", vim.log.levels.INFO)
+		log.info("[Jumper] path delete cancelled")
 		return
 	end
 
@@ -86,16 +87,10 @@ local function swap_marked(bufnr)
 	local current_picker = action_state.get_current_picker(bufnr)
 	local selected = current_picker._multi:get()
 	if #selected < 2 then
-		vim.notify(
-			"[Jumper] need at least 2 selections to swap",
-			vim.log.levels.INFO
-		)
+		log.error("[Jumper] need at least 2 selections to swap")
 		return
 	elseif #selected > 2 then
-		vim.notify(
-			"[Jumper] too many selections, only 2 can be swapped",
-			vim.log.levels.INFO
-		)
+		log.error("[Jumper] too many selections, only 2 can be swapped")
 		return
 	end
 
