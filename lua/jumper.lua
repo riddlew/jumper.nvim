@@ -33,7 +33,7 @@ local function get_input_path(default)
 	return input_path
 end
 
-local function get_input_name(default, path)
+local function get_input_name(default)
 	local input_name = vim.fn.input({
 		prompt = "[Jumper] Name (blank to use path as name): ",
 		default = default,
@@ -42,10 +42,6 @@ local function get_input_name(default, path)
 
 	if input_name == "::CANCEL::" then
 		return nil
-	end
-
-	if input_name == "" then
-		return path
 	end
 
 	return input_name
@@ -70,6 +66,7 @@ function M.add()
 	if input_name == nil then
 		return
 	end
+
 	if input_name == "" then
 		input_name = input_path
 	end
@@ -122,6 +119,7 @@ function M.edit(path)
 			if input_name == nil then
 				return
 			end
+
 			if input_name == "" then
 				input_name = v.path
 			end
