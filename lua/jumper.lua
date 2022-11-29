@@ -83,6 +83,7 @@ function M.remove(path)
 	for i, v in pairs(JumperPaths) do
 		if v.path == path then
 			table.remove(JumperPaths, i)
+			M:save_paths()
 			log.info(string.format("[Jumper] %s has been deleted", v.name))
 			return
 		end
