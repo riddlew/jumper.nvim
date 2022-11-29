@@ -21,7 +21,7 @@ local function tbl_has_entry(table, entry)
 end
 
 local function get_input_path(default)
-	local input_path = vim.fn.input("[Jumper] Path: ", default)
+	local input_path = vim.fn.input("[Jumper] Path: ", default, "file")
 
 	if input_path == "" then
 		return nil
