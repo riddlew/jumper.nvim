@@ -1,4 +1,8 @@
-main: fmt lint
+main: check lint
+
+check:
+	@echo "Checking format (stylua)..."
+	@stylua lua/ --config-path=.stylua.toml --check
 
 fmt:
 	@echo "Formatting (stylua)..."
@@ -7,3 +11,4 @@ fmt:
 lint:
 	@echo "Linting (luacheck)..."
 	@luacheck lua/
+
