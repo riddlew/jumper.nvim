@@ -6,4 +6,4 @@ fmt:
 
 lint:
 	@echo "Linting (luacheck)..."
-	@luacheck lua/ --globals vim
+	@luacheck lua/
