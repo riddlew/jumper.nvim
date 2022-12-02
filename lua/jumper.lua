@@ -31,7 +31,7 @@ local function get_input_path(default)
 	input_path = string.gsub(input_path, "%s*$", "")
 	input_path = string.gsub(input_path, "/*$", "")
 
-	return input_path
+	return Path:new(input_path)
 end
 
 local function get_input_name(default)
@@ -57,7 +57,7 @@ function M.add()
 		return
 	end
 
-	if tbl_has_entry(JumperPaths, input_path) then
+	if tbl_has_entry(JumperPaths, input_path.filename) then
 		log.error("[Jumper] This path already exists")
 		return
 	end
@@ -69,10 +69,10 @@ function M.add()
 	end
 
 	if input_name == "" then
-		input_name = input_path
+		input_name = input_path.filename
 	end
 
-	path.path = input_path
+	path.path = input_path.filename
 	path.name = input_name
 
 	table.insert(JumperPaths, path)
@@ -125,7 +125,7 @@ function M.edit(path)
 				input_name = v.path
 			end
 
-			v.path = input_path
+			v.path = input_path.filename
 			v.name = input_name
 			M:save_paths()
 			return
