@@ -62,6 +62,11 @@ function M.add()
 		return
 	end
 
+	if not input_path:exists() then
+		log.error("[Jumper] This path does not exist")
+		return
+	end
+
 	local input_name = get_input_name()
 
 	if input_name == nil then
@@ -112,6 +117,11 @@ function M.edit(path)
 			local input_path = get_input_path(v.path)
 
 			if input_path == nil then
+				return
+			end
+
+			if not input_path:exists() then
+				log.error("[Jumper] This path does not exist")
 				return
 			end
 
