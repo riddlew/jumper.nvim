@@ -12,6 +12,11 @@ local defaults = {
 		directory = "",
 		file = "",
 	},
+	hl_groups = {
+		directory = "JumperDirectory",
+		file = "JumperFile",
+		path = "Comment",
+	}
 }
 
 local function tbl_has_entry(table, entry)
