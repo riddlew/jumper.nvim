@@ -8,6 +8,10 @@ JumperPaths = {}
 
 local defaults = {
 	save_file = "jumper.json",
+	icons = {
+		directory = "",
+		file = "",
+	},
 }
 
 local function tbl_has_entry(table, entry)
@@ -75,6 +79,12 @@ function M.add()
 
 	if input_name == "" then
 		input_name = input_path.filename
+	end
+
+	if input_path:is_dir() then
+		path.type = "directory"
+	else
+		path.type = "file"
 	end
 
 	path.path = input_path.filename

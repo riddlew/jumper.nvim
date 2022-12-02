@@ -27,9 +27,11 @@ local function create_finder()
 				-- 	entry.name,
 				-- 	{ string.format("(%s)", entry.path), "Comment" },
 				-- })
-				local line = entry.name .. " " .. entry.path
+				local icon = string.format("%s  ", JumperConfig.icons[entry.type])
+				local name = string.format("%s ", entry.name)
+				local line = icon .. name .. entry.path
 				local highlights = {}
-				local hl_start = #entry.name + 1
+				local hl_start = #icon + #name
 				local hl_end = hl_start + #entry.path
 				table.insert(highlights, { { hl_start, hl_end }, "Comment" })
 				return line, highlights
