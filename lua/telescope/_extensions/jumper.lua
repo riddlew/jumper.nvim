@@ -115,6 +115,7 @@ local function swap_marked(bufnr)
 	table.remove(JumperPaths, j.index - 1)
 	table.insert(JumperPaths, i.index, j.value)
 	table.insert(JumperPaths, j.index, i.value)
+	jumper.save_paths()
 	current_picker:refresh(create_finder(), { reset_prompt = true })
 end
 
