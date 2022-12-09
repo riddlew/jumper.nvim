@@ -6,6 +6,7 @@ local finders = require("telescope.finders")
 local action_state = require("telescope.actions.state")
 local jumper = require("jumper")
 local log = require("log").log
+local Path = require("plenary.path")
 
 if not has_telescope then
 	error("This plugin requires nvim-telescope/telescope.nvim")
@@ -30,10 +31,11 @@ local function create_finder()
 				local icon =
 					string.format("%s  ", JumperConfig.icons[entry.type])
 				local name = string.format("%s ", entry.name)
-				local line = icon .. name .. entry.path
+				local path = Path:new(entry.path):normalize(vim.fn.getcwd())
+				local line = icon .. name .. path
 				local highlights = {}
 				local hl_start = #icon + #name
-				local hl_end = hl_start + #entry.path
+				local hl_end = hl_start + #path
 				local name_hl = JumperConfig.hl_groups[entry.type]
 				table.insert(
 					highlights,
@@ -44,7 +46,7 @@ local function create_finder()
 			end
 			return {
 				value = entry,
-				ordinal = entry.path,
+				ordinal = entry.name,
 				name = entry.name,
 				path = entry.path,
 				display = make_display,
