@@ -167,6 +167,10 @@ function M.save_paths()
 end
 
 function M.load_paths()
+	local config = JumperConfig.path:read()
+	if config == "" then
+		return {}
+	end
 	return vim.json.decode(JumperConfig.path:read())
 end
 
