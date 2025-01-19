@@ -121,31 +121,37 @@ local function swap_marked(bufnr)
 	current_picker:refresh(create_finder(), { reset_prompt = true })
 end
 
--- local function move_path_down(bufnr)
--- 	local selection = action_state.get_selected_entry()
--- 	local current_picker = action_state.get_current_picker(bufnr)
---
--- 	if selection.index == #JumperPaths then
--- 		return
--- 	end
---
--- 	table.remove(JumperPaths, selection.index)
--- 	table.insert(JumperPaths, selection.index + 1, selection.value)
--- 	current_picker:refresh(create_finder(), { reset_prompt = true })
--- end
---
--- local function move_path_up(bufnr)
--- 	local selection = action_state.get_selected_entry()
--- 	local current_picker = action_state.get_current_picker(bufnr)
---
--- 	if selection.index == 1 then
--- 		return
--- 	end
---
--- 	table.remove(JumperPaths, selection.index)
--- 	table.insert(JumperPaths, selection.index - 1, selection.value)
--- 	current_picker:refresh(create_finder(), { reset_prompt = true })
--- end
+local function move_path_down(bufnr)
+	local selection = action_state.get_selected_entry()
+	local current_picker = action_state.get_current_picker(bufnr)
+
+	if selection.index == #JumperPaths then
+		return
+	end
+
+	table.remove(JumperPaths, selection.index)
+	table.insert(JumperPaths, selection.index + 1, selection.value)
+	current_picker:refresh(create_finder(), { reset_prompt = true })
+end
+
+local function move_path_up(bufnr)
+	local selection = action_state.get_selected_entry()
+	local current_picker = action_state.get_current_picker(bufnr)
+
+	if selection.index == 1 then
+		return
+	end
+
+	table.remove(JumperPaths, selection.index)
+	table.insert(JumperPaths, selection.index - 1, selection.value)
+	current_picker:refresh(create_finder(), { reset_prompt = true })
+end
+
+local function open_with_tmux(bufnr)
+	local selection = action_state.get_selected_entry()
+
+	vim.cmd(string.format("!tmux neww tmux-sessionizer %s \"%s\"", selection.path, selection.name))
+end
 
 local function picker(opts)
 	opts = opts or {}
@@ -167,6 +173,15 @@ local function picker(opts)
 
 				map("n", "<C-s>", swap_marked)
 				map("i", "<C-s>", swap_marked)
+
+				map("n", "<C-j>", move_path_down)
+				map("i", "<C-j>", move_path_down)
+
+				map("n", "<C-k>", move_path_up)
+				map("i", "<C-k>", move_path_up)
+
+				map("n", "<M-t>", open_with_tmux)
+				map("i", "<M-t>", open_with_tmux)
 				return true
 			end,
 		})
